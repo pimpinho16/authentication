@@ -1,0 +1,14 @@
+server:
+  port: 8181
+
+database:
+  host: localhost
+  port: 5432
+  dbname: bank
+  user: postgres
+  password: root
+  sslmode: disable
+
+
+expireTime: 30
+
