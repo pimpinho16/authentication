@@ -1,20 +1,21 @@
 package main
 
 import (
-	"authentication/config"
-	jwt "authentication/jwt"
-	userRepo "authentication/repo/user"
+	userRepo "authentication/repo/users"
+	"authentication/utils/config"
+	jwt "authentication/utils/jwt"
 	//"authentication/model"
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"net/http"
+	"log"
 )
 
 func main(){
-	//var claims model.MyClaims
 	fmt.Println("Hello World")
 
+	var log log.Logger
 	//obteniendo configuraciones
 	config,err := config.GetConfigs()
 
@@ -27,13 +28,19 @@ func main(){
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
+	if err != nil {
+		panic(err)
+	}
 	userDB := userRepo.NewUserDataBase(db)
 
-	result := userDB.IsUser("aandrade","12345")
-	if result {
-		tokenString,err := jwt.GenerateToken("aandrade","12345",config.ExpireTime)
+	result,err := userDB.IsUser("aandrade","12345")
 
-		if err!= nil{
+	if err != nil {
+		log.Printf("Error trying to find user %s  ","andrade")
+	} else{
+		tokenString,err := jwt.GenerateToken(int(result.ID),"12345",config.Jwt.ExpireTime,config.Jwt.Key)
+
+		if err == nil{
 			fmt.Println(tokenString)
 		}
 	}
@@ -44,12 +51,12 @@ func main(){
 }
 
 
-func getDBConnection(config  config.Configurations) string{
+func getDBConnection(config config.Configurations) string{
 	dns:= fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=%s",
 		config.Database.Host,
 		config.Database.Port,
-		config.Database.User,
+		config.Database.Username,
 		config.Database.Password,
 		config.Database.Dbname,
 		config.Database.Sslmode)

@@ -1,4 +1,4 @@
-package user
+package users
 
 import (
 	"database/sql"
@@ -6,7 +6,6 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"reflect"
-	"regexp"
 	"testing"
 )
 
@@ -43,7 +42,7 @@ func TestNewUserDataBase(t *testing.T) {
 		})
 	}
 }
-
+/*
 func TestUserDatabase_IsUser(t *testing.T) {
 	type fields struct {
 		user     string
@@ -84,6 +83,8 @@ func TestUserDatabase_IsUser(t *testing.T) {
 	}
 
 }
+*/
+
 func mockDb() (*gorm.DB, sqlmock.Sqlmock) {
 	var (
 		db     *sql.DB

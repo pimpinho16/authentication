@@ -1,4 +1,4 @@
-package model
+package users
 
 type BankUsrUsers struct{
 	ID uint `gorm:"column:id"`
