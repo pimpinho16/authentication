@@ -15,11 +15,16 @@ type UserDatabase struct{
 
 func (ud *UserDatabase) IsUser (user string, pass string) (bool){
 	var userModel []model.BankUsrUsers
-	result := ud.Db.Find(&userModel).Where("username=? and password = ?",user,pass)
-	if result.RowsAffected >=0 {
+	result := ud.Db.Find(&userModel)
+	/*if result.RowsAffected >=0 {
 		return true
 	}else {
 		return false
 	}
-
+	*/
+	if result != nil {
+		return true
+	}else {
+		return false
+	}
 }
