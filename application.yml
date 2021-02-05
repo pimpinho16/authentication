@@ -5,10 +5,12 @@ database:
   host: localhost
   port: 5432
   dbname: bank
-  user: postgres
+  username: postgres
   password: root
   sslmode: disable
 
+jwt:
+  expireTime: 30
+  key: "my-secret-key"
 
-expireTime: 30
 

@@ -6,9 +6,9 @@ import (
 )
 
 type Configurations struct{
-	Server ServerConfigurations
-	Database DatabaseConfigurations
-	ExpireTime string
+	Server     ServerConfigurations
+	Database   DatabaseConfigurations
+	Jwt Jwt
 }
 
 type ServerConfigurations struct{
@@ -18,12 +18,17 @@ type ServerConfigurations struct{
 type DatabaseConfigurations struct{
 	Host string
 	Port string
-	User string
+	Username string
 	Password string
 	Dbname string
 	Sslmode string
 }
 
+type Jwt struct {
+	ExpireTime string
+	Key	       string
+
+}
 func GetConfigs()  (Configurations,error){
 	//set the file  of the configurations file
 	viper.SetConfigName("application")

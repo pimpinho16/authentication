@@ -1,29 +1,30 @@
 package jwt
 
 import (
-	"authentication/model"
+	"authentication/entities"
 	"github.com/dgrijalva/jwt-go"
 	"strconv"
 	"time"
 )
 
-
-func GenerateToken(user string, pass string,minutes string) (string, error){
-	var claims model.MyClaims
-	var jwtKey = []byte("my-secret-key")
+//Method to generate a jwt token using a secret key and 30 minutes of lifespan
+//Returns a token string
+func GenerateToken(id int ,ip string,minutes string,key string) (string, error){
+	var claims entities.MyClaims
+	var jwtKey = []byte(key)
 
 	expTime,err := strconv.Atoi(minutes)
-
-	tokenTime := time.Duration(expTime) * time.Minute
-
 
 	if err != nil{
 		return "",err
 	}
+
+	tokenTime := time.Duration(expTime) * time.Minute
 	expiration := time.Now().Add(tokenTime)
 
-	claims = model.MyClaims{
-		Username: user,
+	claims = entities.MyClaims{
+		Ip: ip,
+		Id: id,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expiration.Unix(),
 		},

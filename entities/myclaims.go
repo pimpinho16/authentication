@@ -1,8 +1,9 @@
-package model
+package entities
 
 import "github.com/dgrijalva/jwt-go"
 
 type MyClaims struct{
-	Username string
+	Id int
+	Ip string
 	jwt.StandardClaims
 }
