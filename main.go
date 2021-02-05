@@ -4,6 +4,8 @@ import (
 	"authentication/config"
 	jwt "authentication/jwt"
 	userRepo "authentication/repo/user"
+	"log"
+
 	//"authentication/model"
 	"fmt"
 	"gorm.io/driver/postgres"
@@ -13,6 +15,8 @@ import (
 
 func main(){
 	//var claims model.MyClaims
+
+	var logger  log.Logger
 	fmt.Println("Hello World")
 
 	//obteniendo configuraciones
@@ -27,7 +31,7 @@ func main(){
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
-	userDB := userRepo.NewUserDataBase(db)
+	userDB := userRepo.NewUserDataBase(db,logger)
 
 	result := userDB.IsUser("aandrade","12345")
 	if result {
